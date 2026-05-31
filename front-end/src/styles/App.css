@@ -1,0 +1,34 @@
+* { 
+  margin: 0; 
+  padding: 0; 
+  box-sizing: border-box; 
+  font-family: 'Apple SD Gothic Neo', 'Pretendard', sans-serif; 
+}
+
+body { 
+  background-color: #000000;
+}
+
+#root {
+  width: 100%;
+  min-height: 100vh;
+}
+
+.app-wrapper { 
+  position: relative;
+  width: 100%; 
+  max-width: 430px; 
+  height: 100vh;    
+  margin: 0 auto; 
+  background-color: #ffffff;
+  overflow: hidden; 
+}
+
+::-webkit-scrollbar {
+  display: none; /* 크롬, 사파리, 엣지 등 웹킷 기반 브라우저 */
+}
+
+* {
+  -ms-overflow-style: none; /* IE, 옛날 엣지 */
+  scrollbar-width: none; /* 파이어폭스 */
+}

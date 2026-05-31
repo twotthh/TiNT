@@ -1,0 +1,294 @@
+.page-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  background-color: #FAFAFA;
+  display: flex;
+  flex-direction: column;
+}
+
+.bg-white {
+  background-color: #FFFFFF;
+}
+
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 24px;
+  background-color: #FFFFFF;
+}
+
+.page-header.center-title {
+  justify-content: center;
+}
+
+.header-title {
+  font-size: 18px;
+  font-weight: 800;
+  color: #000;
+}
+
+.back-icon {
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+}
+.placeholder {
+  width: 24px;
+}
+
+.log-tabs {
+  display: flex;
+  background-color: #FFFFFF;
+  padding: 0 20px;
+  border-bottom: 1px solid #F0F0F0;
+}
+
+.log-tab {
+  flex: 1;
+  text-align: center;
+  padding: 12px 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: #BDBDBD;
+  cursor: pointer;
+}
+
+.log-tab.active {
+  color: #4CAF50;
+  border-bottom: 2px solid #4CAF50;
+}
+
+.log-content-area {
+  flex: 1;
+  overflow-y: auto;
+  padding: 30px 20px;
+  background-color: #FFFFFF;
+}
+
+.timeline-item {
+  display: flex;
+  margin-bottom: 30px;
+}
+
+.time-col {
+  width: 50px;
+  font-size: 14px;
+  font-weight: 800;
+  color: #000;
+  padding-top: 2px;
+}
+
+.line-col {
+  position: relative;
+  width: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.status-dot {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  z-index: 2;
+}
+
+.status-dot.safe {
+     background-color: #A5D6A7; 
+    }
+
+.status-dot.caution { 
+    background-color: #FFC300; 
+}
+
+.status-dot.risk { 
+    background-color: #FF4C4C; 
+}
+
+.timeline-line {
+  position: absolute;
+  top: 16px;
+  bottom: -40px;
+  width: 2px;
+  background-color: #F5F5F5;
+  z-index: 1;
+}
+
+.content-col {
+  flex: 1;
+  padding-left: 10px;
+}
+
+.log-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: #111;
+  line-height: 1.4;
+  margin-bottom: 8px;
+  word-break: keep-all;
+}
+
+.log-reason {
+  display: inline-block;
+  background-color: #F5F5F5;
+  color: #757575;
+  font-size: 11px;
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-weight: 600;
+}
+
+.action-col {
+  width: 40px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-start;
+}
+
+.play-btn {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 12px;
+  cursor: pointer;
+  padding-left: 3px; 
+}
+
+.play-btn.caution { 
+    background-color: #FFF3C4; 
+    color: #FFC300; 
+}
+
+.play-btn.risk { 
+    background-color: #FFD6D6; 
+    color: #FF4C4C; 
+}
+
+.view-all-date {
+  text-align: center;
+  margin-top: 20px;
+  margin-bottom: 30px;
+}
+
+.view-all-date span {
+  font-size: 14px;
+  font-weight: 800;
+  color: #4CAF50;
+  cursor: pointer;
+}
+
+.detail-content-area {
+  flex: 1;
+  overflow-y: auto;
+  padding: 24px;
+}
+
+.detail-subtitle {
+  font-size: 16px;
+  font-weight: 800;
+  color: #000;
+  margin-bottom: 30px;
+}
+
+.detail-section {
+  margin-bottom: 36px;
+}
+
+.section-title {
+  font-size: 15px;
+  font-weight: 800;
+  color: #000;
+  margin-bottom: 16px;
+}
+
+.risk-score-container {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.score-text {
+  font-size: 36px;
+  font-weight: 900;
+  color: #FFC300;
+  line-height: 1;
+}
+
+.score-unit {
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.score-bar-bg {
+  flex: 1;
+  height: 8px;
+  background-color: #F5F5F5;
+  border-radius: 10px;
+}
+
+.score-bar-fill {
+  height: 100%;
+  background-color: #FFC300;
+  border-radius: 10px;
+}
+
+.desc-text {
+  font-size: 14px;
+  line-height: 1.6;
+  color: #555;
+  word-break: keep-all;
+}
+
+.audio-player {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.play-btn.lg {
+  width: 44px;
+  height: 44px;
+  font-size: 18px;
+}
+
+.waveform-container {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  height: 44px;
+}
+
+.wave-bar {
+  flex: 1;
+  background-color: #FFC300;
+  border-radius: 2px;
+  min-height: 4px;
+}
+
+.audio-time {
+  font-size: 12px;
+  font-weight: 600;
+  color: #757575;
+}
+
+.emotion-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.badge {
+  background-color: #F5F5F5;
+  color: #555;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 8px 14px;
+  border-radius: 20px;
+}

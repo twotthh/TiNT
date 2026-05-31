@@ -1,0 +1,652 @@
+.home-wrapper {
+  position: relative;
+  width: 100%;  
+  height: 100%; 
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: column;
+}
+
+.scrollable-content {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-bottom: 30px;
+}
+
+.home-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px 24px 10px 24px;
+}
+
+.home-header .logo {
+  height: 32px;
+  object-fit: contain;
+}
+
+.header-icons {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+.top-icon {
+  width: 32px;
+  height: 32px;
+  min-width: 32px;
+  object-fit: contain;
+  cursor: pointer;
+}
+
+.top-tabs {
+  display: flex;
+  justify-content: flex-end;
+  gap: 18px;
+  padding: 10px 24px 24px 24px;
+}
+
+.top-tabs .tab {
+  font-size: 16px;
+  color: #C0C0C0;
+  cursor: pointer;
+  font-weight: 600;
+  position: relative;
+}
+
+.top-tabs .tab.active {
+  color: #000000;
+  font-weight: 800;
+}
+
+.top-tabs .tab.active::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 24px;
+  height: 3px;
+  background-color: #000000;
+  border-radius: 2px;
+}
+
+.main-content {
+  padding: 0 20px;
+}
+
+.donut-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 36px;
+  margin: 10px 0 40px 0;
+}
+
+.donut-chart-container {
+  position: relative;
+  width: 170px;
+  height: 170px;
+}
+
+.donut-svg {
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg); 
+}
+
+.donut-segment {
+  transition: stroke-dasharray 1.4s cubic-bezier(0.34, 1.56, 0.64, 1), 
+              stroke-dashoffset 1.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.donut-center-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+}
+
+.status-label {
+  font-size: 13px;
+  color: #757575;
+  margin-bottom: 2px;
+  font-weight: 600;
+}
+
+.status-value {
+  font-size: 30px;
+  font-weight: 900;
+  color: #FFC300;
+}
+
+.donut-legend {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  color: #333;
+}
+
+.legend-item .dot {
+  display: block !important;      
+  min-width: 12px !important;   
+  min-height: 12px !important;    
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.dot.green { background: #A5D6A7 !important; }
+.dot.yellow { background: #FFC300 !important; }
+.dot.red { background: #FF4C4C !important; }
+
+.legend-item strong {
+  margin-left: 6px;
+  font-weight: 800;
+  font-size: 15px;
+}
+
+.card {
+  background-color: #FFFFFF;
+  border-radius: 28px; 
+  padding: 24px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03); 
+  margin-bottom: 16px;
+  border: 1px solid rgba(0,0,0,0.01);
+}
+
+.bouncy-card {
+  transition: transform 0.2s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.bouncy-card:active {
+  transform: scale(0.97);
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.title-with-icon {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.card-header.no-margin {
+  margin-bottom: 0;
+  justify-content: flex-start;
+  gap: 10px;
+}
+
+.card-icon {
+  width: 26px;
+  height: 26px;
+  object-fit: contain;
+}
+
+.stats-row {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.half-card {
+  flex: 1;
+  margin-bottom: 0;
+  padding: 22px 20px;
+}
+
+.card-header-title {
+  font-size: 14px;
+  font-weight: 800;
+  color: #111;
+}
+
+.card-body {
+  margin-bottom: 8px;
+  display: flex;
+  align-items: baseline;
+  justify-content: flex-start; 
+}
+
+.big-number {
+  font-size: 38px;
+  font-weight: 900;
+  color: #000;
+  letter-spacing: -1px;
+}
+
+.unit {
+  font-size: 16px;
+  font-weight: 800;
+  margin-left: 4px;
+  color: #555;
+}
+
+.card-footer {
+  text-align: left;
+}
+
+.card-footer .compare-text {
+  font-size: 13px;
+  color: #888;
+  font-weight: 600;
+}
+
+.increase {
+  color: #A5D6A7;
+  font-weight: 800;
+}
+
+.card-title {
+  font-size: 16px;
+  font-weight: 800;
+  color: #000;
+}
+
+.graph-container {
+  position: relative;
+  width: 100%;
+  margin-top: 10px;
+}
+
+.graph-tooltip-wrapper {
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  padding-bottom: 8px;
+}
+
+.graph-tooltip {
+  background-color: #FFF3C4;
+  color: #E6A800;
+  font-size: 12px;
+  padding: 6px 12px;
+  border-radius: 14px;
+  font-weight: 800;
+  box-shadow: 0 4px 10px rgba(255, 195, 0, 0.2);
+  position: relative;
+}
+
+.graph-tooltip::after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 5px 6px 0;
+  border-style: solid;
+  border-color: #FFF3C4 transparent transparent transparent;
+}
+
+.line-graph-svg {
+  width: 100%;
+  height: 70px;
+  overflow: visible;
+}
+
+.graph-x-axis {
+  display: flex;
+  justify-content: space-between;
+  border-top: 2px dashed #F0F0F0;
+  padding-top: 12px;
+  margin-top: 5px;
+  font-size: 11px;
+  font-weight: 700;
+  color: #A0A0A0;
+}
+
+.progress-container {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: 14px;
+}
+
+.progress-bar-bg {
+  flex: 1;
+  height: 14px;
+  background-color: #F0F0F0;
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  background-color: #A5D6A7;
+  border-radius: 20px;
+}
+
+.flag-icon {
+  width: 28px;
+  height: 28px;
+}
+
+.recommend-card {
+  display: flex;
+  justify-content: space-between;
+  padding: 24px;
+}
+
+.arrow-icon {
+  width: 22px;
+  height: 22px;
+  opacity: 0.3;
+}
+
+.bottom-nav-bar {
+  position: sticky;
+  bottom: 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 14px 0 24px 0;
+  background-color: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border-top: 1px solid rgba(0,0,0,0.03);
+  z-index: 100;
+}
+
+.nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+}
+
+.nav-icon {
+  width: 30px;
+  height: 30px;
+  filter: grayscale(100%);
+  opacity: 0.3;
+  transition: all 0.2s ease;
+}
+
+.nav-item span {
+  font-size: 11px;
+  color: #BDBDBD;
+  font-weight: 700;
+}
+
+.nav-item.active span {
+  color: #000000;
+  font-weight: 800;
+}
+
+.nav-item.active .nav-icon {
+  filter: none;
+  opacity: 1;
+  transform: translateY(-3px); 
+}
+
+.clickable-card {
+  cursor: pointer;
+  user-select: none; 
+}
+
+.clickable-card:active .recommend-box {
+  background-color: #E8EDE6; 
+}
+
+.refresh-hint {
+  font-size: 11px;
+  color: #9E9E9E;
+  font-weight: 600;
+  letter-spacing: -0.5px;
+}
+
+.recommend-box {
+  display: flex;
+  align-items: center;
+  background-color: #F7F9F6;
+  border-radius: 16px;
+  padding: 16px 20px;
+  gap: 16px;
+  transition: background-color 0.2s ease; 
+}
+
+.recommend-icon-circle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  background-color: #FFFFFF;
+  border-radius: 50%;
+  font-size: 24px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+}
+
+.recommend-text {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.recommend-text p {
+  font-size: 13px;
+  font-weight: 600;
+  color: #444444;
+  line-height: 1.4;
+  margin: 0;
+  word-break: keep-all; 
+}
+
+/* ---------------------------------
+  💡 날짜 네비게이터 스타일 (새로 추가됨)
+--------------------------------- */
+.date-navigator {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 24px 20px 24px;
+  background-color: #FFFFFF;
+}
+
+.date-item {
+  font-size: 15px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: opacity 0.2s;
+  letter-spacing: -0.5px;
+}
+
+.date-item:active {
+  opacity: 0.5;
+}
+
+/* 양옆의 이전 날짜, 다음 날짜는 연한 회색으로 처리 */
+.prev-date, .next-date {
+  color: #D3D3D3;
+}
+
+/* 가운데 현재 날짜 강조 */
+.current-date {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #000000;
+  cursor: default; /* 중앙은 클릭 안 되게 처리 */
+}
+
+.date-number {
+  font-size: 20px;
+  font-weight: 900;
+}
+
+/* 오늘 / 요일 배지 공통 스타일 */
+.badge {
+  font-size: 12px;
+  padding: 4px 10px;
+  border-radius: 14px;
+  font-weight: 700;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: -2px; /* 텍스트와 시각적 균형 맞춤 */
+}
+
+/* '오늘'일 때의 까만색 타원 배지 */
+.today-badge {
+  background-color: #111111;
+  color: #FFFFFF;
+}
+
+/* 다른 날짜일 때의 연한 회색 요일 배지 */
+.day-badge {
+  background-color: #F2F2F2;
+  color: #888888;
+}
+
+/* ---------------------------------
+  💡 서브 페이지(자세히/한눈에) 확장 헤더
+--------------------------------- */
+.sub-page-header {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 16px 20px 0 20px;
+  background-color: transparent;
+  position: sticky;
+  top: 0;
+  z-index: 20;
+}
+
+.sub-page-header .back-arrow-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  width: 50px;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  padding: 0;
+  margin-left: -4px;
+}
+
+.sub-page-header .nav-icon-img {
+  width: 26px;
+  height: 26px;
+  object-fit: contain;
+}
+
+/* ---------------------------------
+  💡 날짜 네비게이터 스타일
+--------------------------------- */
+.date-navigator {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 24px 20px 24px;
+  background-color: #FFFFFF;
+}
+
+.date-item {
+  font-size: 15px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: opacity 0.2s;
+  letter-spacing: -0.5px;
+}
+
+.date-item:active {
+  opacity: 0.5;
+}
+
+.prev-date, .next-date {
+  color: #D3D3D3;
+}
+
+.current-date {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #000000;
+  cursor: default;
+}
+
+.date-number {
+  font-size: 20px;
+  font-weight: 900;
+}
+
+.badge {
+  font-size: 12px;
+  padding: 4px 10px;
+  border-radius: 14px;
+  font-weight: 700;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: -2px;
+}
+
+.today-badge {
+  background-color: #111111;
+  color: #FFFFFF;
+}
+
+.day-badge {
+  background-color: #F2F2F2;
+  color: #888888;
+}
+
+/* ---------------------------------
+  💡 서브 페이지 확장 헤더 (타이틀 포함)
+--------------------------------- */
+.sub-page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 20px 12px 20px;
+  background-color: #FFFFFF; /* 💡 투명(transparent)에서 완전한 하얀색으로 변경! */
+  position: sticky;
+  top: 0;
+  z-index: 100; /* 💡 스크롤할 때 무조건 맨 위에 있도록 수치 증가 */
+}
+
+.sub-page-header .back-arrow-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  width: 50px;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  padding: 0;
+  margin-left: -4px;
+}
+
+.sub-page-header .nav-icon-img {
+  width: 26px;
+  height: 26px;
+  object-fit: contain;
+}
+
+.sub-page-title {
+  font-size: 18px;
+  font-weight: 800;
+  color: #111111;
+  margin: 0;
+}
+
+.header-placeholder {
+  width: 50px;
+}
