@@ -1,4 +1,3 @@
-/* TiNT 스타일 공통 헤더 */
 .tint-calendar-header {
   display: flex;
   justify-content: space-between;
@@ -7,7 +6,6 @@
   background-color: #FFFFFF;
 }
 
-/* 💡 뒤로가기 이미지 아이콘 스타일 */
 .back-arrow-btn {
   background: none;
   border: none;
@@ -25,14 +23,12 @@
   object-fit: contain;
 }
 
-/* 연도 이동 네비게이션 구역 */
 .year-nav-container {
   display: flex;
   align-items: center;
   gap: 16px;
 }
 
-/* 💡 화살표 이미지 아이콘 스타일 */
 .year-nav-btn {
   background: none;
   border: none;
@@ -47,12 +43,12 @@
   width: 18px;
   height: 18px;
   object-fit: contain;
-  opacity: 0.6; /* 텍스트 느낌처럼 살짝 연하게 */
+  opacity: 0.6; 
   transition: opacity 0.2s;
 }
 
 .year-nav-btn:active .nav-icon-img-small {
-  opacity: 1; /* 누를 때 진해짐 */
+  opacity: 1; 
 }
 
 .header-title {
@@ -63,7 +59,6 @@
   text-align: center;
 }
 
-/* 오늘로 돌아가기 버튼 */
 .today-btn {
   background-color: #F4F4F4;
   color: #333333;
@@ -83,7 +78,6 @@
   transform: scale(0.95);
 }
 
-/* 요일 헤더 */
 .week-header-box {
   display: flex;
   justify-content: space-around;
@@ -105,7 +99,6 @@
   color: #AAAAAA;
 }
 
-/* 스크롤 영역 */
 .calendar-scroll-area {
   position: relative;
   flex: 1;
@@ -113,13 +106,11 @@
   padding-bottom: 40px; 
 }
 
-/* 개별 월 섹션 */
 .month-section {
   padding-top: 10px;
   margin-bottom: 30px;
 }
 
-/* 월 타이틀 */
 .month-title {
   font-size: 22px;
   font-weight: 800;
@@ -129,14 +120,12 @@
   letter-spacing: -0.5px;
 }
 
-/* 날짜 그리드 */
 .days-grid {
   display: flex;
   flex-wrap: wrap;
   padding: 0 10px;
 }
 
-/* 개별 날짜 셀 */
 .day-cell {
   width: 14.28%; 
   height: 64px; 
@@ -146,25 +135,23 @@
   justify-content: flex-start;
   padding-top: 4px;
   position: relative;
-  cursor: pointer; /* 💡 누를 수 있는 요소임을 마우스 커서로 표시 */
+  cursor: pointer; 
 }
 
-/* 숫자 스타일 (완전한 동그라미로 변경) */
 .day-number {
   font-size: 16px;
   font-weight: 700;
   color: #222222;
-  width: 36px; /* 완벽한 원을 위해 36px로 넉넉하게 확장 */
+  width: 36px; 
   height: 36px;
   display: flex;
   justify-content: center;
   align-items: center;
-  border-radius: 50%; /* 💡 핵심: 둥근 네모(10px)에서 완벽한 동그라미(50%)로 수정 */
+  border-radius: 50%; 
   margin-bottom: 6px;
   transition: all 0.2s;
 }
 
-/* 💡 날짜 터치 시 피드백 애니메이션 */
 .day-cell:active .day-number {
   background-color: #F0F0F0;
   transform: scale(0.9);
@@ -174,7 +161,6 @@
   color: #BDBDBD; 
 }
 
-/* 오늘 날짜 포인트 */
 .day-number.today {
   background-color: #111111;
   color: #FFFFFF;
@@ -182,18 +168,24 @@
   box-shadow: 0 4px 10px rgba(0,0,0,0.15);
 }
 
-/* 오늘 날짜는 터치 시 색상 반전 방지 */
 .day-cell:active .day-number.today {
   background-color: #333333; 
 }
 
-/* 상태 점 */
 .status-dot-small {
   width: 8px;
   height: 8px;
   border-radius: 50%;
 }
 
-.status-dot-small.safe { background-color: #A5D6A7; }
-.status-dot-small.caution { background-color: #FFC300; }
-.status-dot-small.risk { background-color: #FF4C4C; }
+.status-dot-small.safe { 
+  background-color: #A5D6A7; 
+}
+
+.status-dot-small.caution { 
+  background-color: #FFC300; 
+}
+
+.status-dot-small.risk { 
+  background-color: #FF4C4C; 
+}

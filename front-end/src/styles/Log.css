@@ -34,6 +34,7 @@
   height: 24px;
   cursor: pointer;
 }
+
 .placeholder {
   width: 24px;
 }
@@ -56,8 +57,8 @@
 }
 
 .log-tab.active {
-  color: #4CAF50;
-  border-bottom: 2px solid #4CAF50;
+  color: #000000;
+  border-bottom: 2px solid #000000;
 }
 
 .log-content-area {
@@ -96,8 +97,8 @@
 }
 
 .status-dot.safe {
-     background-color: #A5D6A7; 
-    }
+    background-color: #A5D6A7; 
+}
 
 .status-dot.caution { 
     background-color: #FFC300; 
@@ -122,22 +123,28 @@
 }
 
 .log-title {
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 700;
-  color: #111;
+  color: #222;
   line-height: 1.4;
-  margin-bottom: 8px;
+  margin-bottom: 2px;
   word-break: keep-all;
 }
 
 .log-reason {
-  display: inline-block;
-  background-color: #F5F5F5;
-  color: #757575;
-  font-size: 11px;
-  padding: 4px 10px;
-  border-radius: 12px;
-  font-weight: 600;
+  display: -webkit-box;
+  -webkit-line-clamp: 2; 
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  background-color: transparent;
+  color: #888888;
+  font-size: 13px;
+  font-weight: 500;
+  padding: 0;
+  margin-top: 6px;
+  line-height: 1.5;
+  word-break: keep-all;
 }
 
 .action-col {
@@ -179,7 +186,7 @@
 .view-all-date span {
   font-size: 14px;
   font-weight: 800;
-  color: #4CAF50;
+  color: #000000;
   cursor: pointer;
 }
 
@@ -197,14 +204,19 @@
 }
 
 .detail-section {
-  margin-bottom: 36px;
+  background-color: #FAFAFA; 
+  border-radius: 16px;
+  padding: 20px;
+  margin-bottom: 16px;
+  border: 1px solid #F0F0F0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02); 
 }
 
 .section-title {
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 800;
-  color: #000;
-  margin-bottom: 16px;
+  color: #333;
+  margin-bottom: 14px;
 }
 
 .risk-score-container {
@@ -281,14 +293,23 @@
 .emotion-badges {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: 8px;
 }
 
 .badge {
-  background-color: #F5F5F5;
-  color: #555;
+  background-color: #FFFFFF;
+  border: 1px solid #EAEAEA;
+  color: #444;
   font-size: 13px;
   font-weight: 600;
   padding: 8px 14px;
-  border-radius: 20px;
+  border-radius: 10px;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.02);
+}
+
+audio {
+  width: 100%;
+  height: 40px;
+  border-radius: 8px;
+  outline: none;
 }

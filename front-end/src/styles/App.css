@@ -25,10 +25,10 @@ body {
 }
 
 ::-webkit-scrollbar {
-  display: none; /* 크롬, 사파리, 엣지 등 웹킷 기반 브라우저 */
+  display: none; 
 }
 
 * {
-  -ms-overflow-style: none; /* IE, 옛날 엣지 */
-  scrollbar-width: none; /* 파이어폭스 */
+  -ms-overflow-style: none;
+  scrollbar-width: none; 
 }

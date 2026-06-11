@@ -1,0 +1,151 @@
+.page-header {
+    position: static !important; 
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 20px;
+    background-color: #FFFFFF;
+    z-index: 1; 
+}
+
+.page-wrapper {
+    overflow-y: auto;
+}
+
+.detail-content-area {
+    flex: 1;
+    overflow-y: auto;
+    padding: 24px;
+}
+
+.detail-subtitle {
+    font-size: 16px;
+    font-weight: 800;
+    color: #000;
+    margin-bottom: 24px;
+}
+
+.detail-section {
+    background-color: #ffffff;
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 16px;
+    border: 1px solid #F0F0F0;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+}
+
+.section-title {
+    font-size: 14px;
+    font-weight: 800;
+    color: #333;
+    margin-bottom: 14px;
+}
+
+.risk-score-container {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.score-text {
+    font-size: 36px;
+    font-weight: 900;
+    line-height: 1;
+}
+
+.score-unit {
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.score-bar-bg {
+    flex: 1;
+    height: 8px;
+    background-color: #EAEAEA;
+    border-radius: 10px;
+}
+
+.score-bar-fill {
+    height: 100%;
+    border-radius: 10px;
+}
+
+.desc-text {
+    font-size: 14px;
+    line-height: 1.6;
+    color: #555;
+    word-break: keep-all;
+}
+
+.audio-player-container {
+    background-color: #FFFFFF; 
+    padding: 10px 0;
+    border-radius: 10px;
+}
+
+.guide-box {
+    background-color: #fffcdf;
+    border: 1px solid #e0d64c;
+    padding: 15px;
+    border-radius: 12px;
+    color: #000000;
+    font-weight: 500;
+}
+
+.no-audio-box {
+    background-color: #fefefe;
+    border-radius: 16px;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: 12px;
+    border: 1px dashed #CBD5E1;
+    margin-top: 10px;
+}
+
+.no-audio-emoji { 
+    font-size: 28px; 
+}
+
+.no-audio-text { 
+    margin: 0; 
+    font-size: 14px; 
+    color: #7e7e7e; 
+    line-height: 1.5; 
+    font-weight: 600; 
+}
+
+.emotion-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.emo-badge {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 14px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.emo-badge strong {
+    font-weight: 900;
+    font-size: 15px;
+}
+
+.emo-기쁨 { background: #E8F5E9; color: #95da99; }
+.emo-놀람 { background: #FFF3E0; color: #ebad7b; }
+.emo-분노 { background: #FFEBEE; color: #f19a9a; }
+.emo-혐오 { background: #F3E5F5; color: #d6a5f5; }
+.emo-슬픔 { background: #E3F2FD; color: #99c2f1; }
+.emo-불안 { background: #ECEFF1; color: #778d97; }
+.emo-공감 { background: #FFF8E1; color: #f5c271; }
+.emo-부러움 { background: #FCE4EC; color: #be8fa3; }
+.emo-안정 { background: #E8F5E9; color: #76b379; }
+.emo-default { background: #F1F5F9; color: #97d5c9; }

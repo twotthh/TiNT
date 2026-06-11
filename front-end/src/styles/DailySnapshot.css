@@ -1,4 +1,3 @@
-/* 탭 진입 애니메이션 */
 .snapshot-tab-content {
   padding: 10px 20px 30px 20px;
   animation: fadeIn 0.4s ease-out;
@@ -7,18 +6,16 @@
   align-items: center;
 }
 
-/* 🎟️ 영수증/티켓 스타일 메인 카드 */
 .shareable-ticket {
   width: 100%;
   max-width: 340px;
   background-color: #FFFFFF;
   border-radius: 32px;
-  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.08); /* 부드럽고 넓은 그림자 */
-  overflow: hidden; /* 모서리 밖으로 삐져나가는 것 방지 */
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
   margin-bottom: 24px;
 }
 
-/* 상단 헤더 (주의 단계인 59%에 맞춘 따뜻한 파스텔 옐로우 배경) */
 .ticket-header {
   background-color: #FFF9E6; 
   padding: 36px 20px 24px;
@@ -28,12 +25,11 @@
   position: relative;
 }
 
-/* 💡 고양이 얼굴 크기 대폭 확대 및 예쁜 입체 그림자 */
 .ticket-cat-img {
   width: 130px; 
   height: auto;
   object-fit: contain;
-  filter: drop-shadow(0 12px 24px rgba(0, 0, 0, 0.15)); /* 네모 배경 없이 외곽선 그림자만! */
+  filter: drop-shadow(0 12px 24px rgba(0, 0, 0, 0.15));
   margin-bottom: 16px;
   transform: translateY(-5px);
 }
@@ -41,7 +37,7 @@
 .ticket-title {
   font-size: 18px;
   font-weight: 800;
-  color: #4A3A00; /* 진한 브라운 톤으로 텍스트 색상 교정 */
+  color: #4A3A00; 
   text-align: center;
   line-height: 1.4;
   letter-spacing: -0.5px;
@@ -53,13 +49,11 @@
   color: #E6A800;
 }
 
-/* 하단 화이트 바디 */
 .ticket-body {
   background-color: #FFFFFF;
   padding: 28px 24px 24px;
 }
 
-/* 3색 게이지 바 */
 .ticket-gauge-container {
   width: 100%;
   position: relative;
@@ -70,7 +64,7 @@
   position: absolute;
   top: -22px;
   transform: translateX(-50%);
-  color: #FFC300; /* 화살표 색상을 배경에 맞게 변경 */
+  color: #FFC300; 
   font-size: 16px;
 }
 
@@ -83,17 +77,23 @@
   background-color: #F0F0F0;
 }
 
-.gauge-safe { background-color: #A5D6A7; }
-.gauge-caution { background-color: #FFC300; }
-.gauge-risk { background-color: #FF4C4C; }
+.gauge-safe { 
+  background-color: #A5D6A7; 
+}
 
-/* 티켓 절취선 느낌의 구분선 */
+.gauge-caution { 
+  background-color: #FFC300; 
+}
+
+.gauge-risk { 
+  background-color: #FF4C4C; 
+}
+
 .ticket-divider {
   border-bottom: 2px dashed #EEEEEE;
   margin: 0 0 24px 0;
 }
 
-/* 💡 답답한 박스를 버리고 텍스트로만 깔끔하게 구성한 그리드 */
 .ticket-stats-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -127,11 +127,15 @@
   color: #888888;
 }
 
-/* 포인트 컬러 텍스트 */
-.text-red { color: #FF4C4C; }
-.text-yellow { color: #FFC300; font-size: 20px; }
+.text-red { 
+  color: #FF4C4C; 
+}
 
-/* 영수증 꼬리말 영역 */
+.text-yellow { 
+  color: #FFC300; 
+  font-size: 20px; 
+}
+
 .ticket-footer {
   margin-top: 28px;
   padding-top: 16px;
@@ -153,7 +157,6 @@
   color: #BBBBBB;
 }
 
-/* 공유하기 버튼 */
 .share-btn {
   width: 100%;
   max-width: 340px;

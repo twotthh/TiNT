@@ -98,7 +98,7 @@
 
 .donut-segment {
   transition: stroke-dasharray 1.4s cubic-bezier(0.34, 1.56, 0.64, 1), 
-              stroke-dashoffset 1.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  stroke-dashoffset 1.4s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .donut-center-text {
@@ -145,9 +145,17 @@
   margin-right: 10px;
 }
 
-.dot.green { background: #A5D6A7 !important; }
-.dot.yellow { background: #FFC300 !important; }
-.dot.red { background: #FF4C4C !important; }
+.dot.green { 
+  background: #A5D6A7 !important; 
+}
+
+.dot.yellow { 
+  background: #FFC300 !important; 
+}
+
+.dot.red { 
+  background: #FF4C4C !important; 
+}
 
 .legend-item strong {
   margin-left: 6px;
@@ -263,34 +271,44 @@
   margin-top: 10px;
 }
 
-.graph-tooltip-wrapper {
-  height: 30px;
-  display: flex;
-  justify-content: center;
-  align-items: flex-end;
-  padding-bottom: 8px;
-}
-
 .graph-tooltip {
-  background-color: #FFF3C4;
-  color: #E6A800;
+  background-color: var(--tooltip-bg, #FFF3C4);
+  color: var(--tooltip-color, #E6A800);
   font-size: 12px;
   padding: 6px 12px;
   border-radius: 14px;
   font-weight: 800;
-  box-shadow: 0 4px 10px rgba(255, 195, 0, 0.2);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
   position: relative;
+  white-space: nowrap; 
 }
 
 .graph-tooltip::after {
   content: '';
   position: absolute;
   bottom: -5px;
-  left: 50%;
+  left: var(--tail-pos, 50%); 
   transform: translateX(-50%);
   border-width: 5px 6px 0;
   border-style: solid;
-  border-color: #FFF3C4 transparent transparent transparent;
+  border-color: var(--tooltip-bg, #FFF3C4) transparent transparent transparent;
+  transition: left 0.3s ease, border-color 0.3s ease;
+}
+
+.pulse-circle {
+  fill: none;
+  animation: pulse-ring 1.5s infinite ease-out;
+}
+
+@keyframes pulse-ring {
+  0% {
+    stroke-width: 0;
+    stroke-opacity: 0.8;
+  }
+  100% {
+    stroke-width: 18px;
+    stroke-opacity: 0;
+  }
 }
 
 .line-graph-svg {
@@ -449,107 +467,6 @@
   word-break: keep-all; 
 }
 
-/* ---------------------------------
-  💡 날짜 네비게이터 스타일 (새로 추가됨)
---------------------------------- */
-.date-navigator {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px 24px 20px 24px;
-  background-color: #FFFFFF;
-}
-
-.date-item {
-  font-size: 15px;
-  font-weight: 800;
-  cursor: pointer;
-  transition: opacity 0.2s;
-  letter-spacing: -0.5px;
-}
-
-.date-item:active {
-  opacity: 0.5;
-}
-
-/* 양옆의 이전 날짜, 다음 날짜는 연한 회색으로 처리 */
-.prev-date, .next-date {
-  color: #D3D3D3;
-}
-
-/* 가운데 현재 날짜 강조 */
-.current-date {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  color: #000000;
-  cursor: default; /* 중앙은 클릭 안 되게 처리 */
-}
-
-.date-number {
-  font-size: 20px;
-  font-weight: 900;
-}
-
-/* 오늘 / 요일 배지 공통 스타일 */
-.badge {
-  font-size: 12px;
-  padding: 4px 10px;
-  border-radius: 14px;
-  font-weight: 700;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: -2px; /* 텍스트와 시각적 균형 맞춤 */
-}
-
-/* '오늘'일 때의 까만색 타원 배지 */
-.today-badge {
-  background-color: #111111;
-  color: #FFFFFF;
-}
-
-/* 다른 날짜일 때의 연한 회색 요일 배지 */
-.day-badge {
-  background-color: #F2F2F2;
-  color: #888888;
-}
-
-/* ---------------------------------
-  💡 서브 페이지(자세히/한눈에) 확장 헤더
---------------------------------- */
-.sub-page-header {
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  padding: 16px 20px 0 20px;
-  background-color: transparent;
-  position: sticky;
-  top: 0;
-  z-index: 20;
-}
-
-.sub-page-header .back-arrow-btn {
-  background: none;
-  border: none;
-  cursor: pointer;
-  width: 50px;
-  text-align: left;
-  display: flex;
-  align-items: center;
-  padding: 0;
-  margin-left: -4px;
-}
-
-.sub-page-header .nav-icon-img {
-  width: 26px;
-  height: 26px;
-  object-fit: contain;
-}
-
-/* ---------------------------------
-  💡 날짜 네비게이터 스타일
---------------------------------- */
 .date-navigator {
   display: flex;
   justify-content: space-between;
@@ -588,38 +505,37 @@
 }
 
 .badge {
-  font-size: 12px;
-  padding: 4px 10px;
-  border-radius: 14px;
-  font-weight: 700;
+  font-size: 13px;
+  padding: 6px 16px !important; 
+  border-radius: 50px !important; 
+  font-weight: 800;
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: -2px;
+  margin-top: -2px; 
 }
 
 .today-badge {
-  background-color: #111111;
-  color: #FFFFFF;
+  background-color: #111111 !important; 
+  color: #FFFFFF !important;
+  border: none !important; 
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15) !important; 
 }
 
 .day-badge {
-  background-color: #F2F2F2;
-  color: #888888;
+  background-color: #F2F2F2 !important;
+  color: #888888 !important;
 }
 
-/* ---------------------------------
-  💡 서브 페이지 확장 헤더 (타이틀 포함)
---------------------------------- */
 .sub-page-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 16px 20px 12px 20px;
-  background-color: #FFFFFF; /* 💡 투명(transparent)에서 완전한 하얀색으로 변경! */
+  background-color: #FFFFFF; 
   position: sticky;
   top: 0;
-  z-index: 100; /* 💡 스크롤할 때 무조건 맨 위에 있도록 수치 증가 */
+  z-index: 100; 
 }
 
 .sub-page-header .back-arrow-btn {
