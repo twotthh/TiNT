@@ -1,53 +1,121 @@
-import React, { useRef } from 'react';
-import html2canvas from 'html2canvas'; // 💡 이미지 캡처 라이브러리 추가
+import React, { useRef, useState, useEffect } from 'react';
+import html2canvas from 'html2canvas'; 
 import '../styles/DailySnapshot.css';
 import catFace from '../assets/cat_face.png';
+import { collection, query, onSnapshot } from 'firebase/firestore';
+import { db } from '../firebaseConfig';
 
-const DailySnapshot = () => {
-  // 💡 캡처할 영역을 지정하기 위한 useRef
+const DailySnapshot = ({ currentDate }) => {
   const captureRef = useRef(null);
+  const dateObj = currentDate || new Date();
 
-  // 💡 공유하기 버튼 클릭 시 실행되는 함수
-  const handleShare = async () => {
-    if (!captureRef.current) return;
+  const [snapData, setSnapData] = useState({
+    avgScore: 0,
+    safePer: 0, cautionPer: 0, riskPer: 0,
+    totalLogs: 0, dangerLogs: 0, jammerLogs: 0,
+    worstHour: '--', topEmotion: '데이터 없음',
+    formattedDate: ''
+  });
 
-    try {
-      // 1. 지정한 영역(영수증 카드)을 고화질 캔버스로 렌더링
-      const canvas = await html2canvas(captureRef.current, {
-        scale: 2, // 화질을 2배로 높여서 깨끗하게 저장
-        useCORS: true, // 외부 이미지(고양이) 로드 허용
-        backgroundColor: null, // 모서리 둥근 부분 배경 투명하게
+  useEffect(() => {
+    const q = query(collection(db, 'tint_results'));
+    const unsubscribe = onSnapshot(q, (snapshot) => {
+      const year = dateObj.getFullYear();
+      const m = String(dateObj.getMonth() + 1).padStart(2, '0');
+      const d = String(dateObj.getDate()).padStart(2, '0');
+      const targetDateString = `${year}-${m}-${d}`;
+
+      let safe = 0, caution = 0, risk = 0, totalScore = 0;
+      let jammerCount = 0;
+      const hourMap = {};
+      const emotionMap = {};
+
+      snapshot.docs.forEach(doc => {
+        const data = doc.data();
+        if (data.timestamp && data.timestamp.startsWith(targetDateString)) {
+          const levelStr = String(data.tint_danger_level || data.danger_level || data.level || data.tint_level || '').toLowerCase();
+          const score = Number(data.tint_danger_score || data.danger_score || data.tint_score || data.score || 0);
+          
+          if (levelStr.includes('2') || levelStr.includes('주의')) { 
+            caution++; 
+          }
+          else if (levelStr.includes('3') || levelStr.includes('위험')) { 
+            risk++; 
+            if (score >= 85) {
+              jammerCount++; 
+            }
+          }
+          else { 
+            safe++; 
+          }
+
+          totalScore += score;
+
+          const hour = data.timestamp.substring(11, 13);
+          if (!hourMap[hour]) hourMap[hour] = { count: 0, score: 0 };
+          hourMap[hour].count += 1;
+          hourMap[hour].score += score;
+
+          const ems = data.tint_emotions || data.emotions || {};
+          Object.entries(ems).forEach(([k, v]) => {
+            emotionMap[k] = (emotionMap[k] || 0) + Number(v);
+          });
+        }
       });
 
-      // 2. 캔버스를 이미지 파일(Blob)로 변환
+      const total = safe + caution + risk;
+      const avgScore = total > 0 ? Math.round(totalScore / total) : 0;
+      
+      let maxHour = '--';
+      let maxHourScore = -1;
+      Object.entries(hourMap).forEach(([h, val]) => {
+        const avgH = val.score / val.count;
+        if (avgH > maxHourScore) {
+          maxHourScore = avgH;
+          maxHour = h;
+        }
+      });
+
+      let topE = '분석 불가';
+      let maxE = -1;
+      Object.entries(emotionMap).forEach(([k, v]) => {
+        if (v > maxE) { maxE = v; topE = k; }
+      });
+
+      setSnapData({
+        avgScore,
+        safePer: total > 0 ? Math.round((safe / total) * 100) : 0,
+        cautionPer: total > 0 ? Math.round((caution / total) * 100) : 0,
+        riskPer: total > 0 ? Math.round((risk / total) * 100) : 0,
+        totalLogs: total,
+        dangerLogs: caution + risk,
+        jammerLogs: jammerCount, 
+        worstHour: maxHour !== '--' ? `${maxHour}~${String(Number(maxHour)+1).padStart(2,'0')}` : '--',
+        topEmotion: maxE > -1 ? topE : '평온함',
+        formattedDate: `${year}.${m}.${d}`
+      });
+    });
+
+    return () => unsubscribe();
+  }, [currentDate]);
+
+  const handleShare = async () => {
+    if (!captureRef.current) return;
+    try {
+      const canvas = await html2canvas(captureRef.current, { scale: 2, useCORS: true, backgroundColor: null });
       canvas.toBlob(async (blob) => {
         if (!blob) return;
-
-        // 이미지 파일 객체 생성
         const file = new File([blob], 'tint_daily_report.png', { type: 'image/png' });
-
-        // 3. 모바일 기기 네이티브 공유 (인스타그램, 카톡 등) 지원 여부 확인
         if (navigator.canShare && navigator.canShare({ files: [file] })) {
           try {
-            await navigator.share({
-              title: 'TiNT 하루 리포트',
-              text: '오늘 나의 대화 온도를 확인해 보세요! 🌡️',
-              files: [file],
-            });
-          } catch (error) {
-            console.log('사용자가 공유를 취소했거나 실패했습니다.', error);
-          }
+            await navigator.share({ title: 'TiNT 하루 리포트', text: '오늘 나의 대화 온도를 확인해 보세요!', files: [file] });
+          } catch (error) { console.log('공유 실패:', error); }
         } else {
-          // 4. PC 환경이거나 공유 API를 지원하지 않는 브라우저 -> 자동 다운로드 폴백
           const url = URL.createObjectURL(blob);
           const a = document.createElement('a');
-          a.href = url;
-          a.download = 'tint_daily_report.png';
-          document.body.appendChild(a);
-          a.click();
-          document.body.removeChild(a);
-          URL.revokeObjectURL(url);
-          alert('영수증 이미지가 갤러리에 저장되었습니다! 📸');
+          a.href = url; a.download = 'tint_daily_report.png';
+          document.body.appendChild(a); a.click(); document.body.removeChild(a);
+          URL.revokeObjectURL(url); alert('영수증 이미지가 저장되었습니다!');
         }
       }, 'image/png');
     } catch (error) {
@@ -56,26 +124,29 @@ const DailySnapshot = () => {
     }
   };
 
+  let aiComment = '완벽해요!';
+  if (snapData.avgScore > 70) aiComment = '내일 더 잘해봐요..';
+  else if (snapData.avgScore > 30) aiComment = '조금 릴렉스~';
+
   return (
     <main className="snapshot-tab-content">
-      {/* 💡 ref={captureRef} 를 추가하여 캡처할 영역을 지정합니다 */}
       <div className="shareable-ticket" ref={captureRef}>
         
         <div className="ticket-header">
           <img src={catFace} alt="Cat Face" className="ticket-cat-img" />
           <h2 className="ticket-title">
             오늘 위험도는 <br />
-            <span className="ticket-score">59%</span> 에요
+            <span className="ticket-score">{snapData.avgScore}%</span> 에요
           </h2>
         </div>
 
         <div className="ticket-body">
           <div className="ticket-gauge-container">
-            <div className="gauge-arrow" style={{ left: '59%' }}>▼</div>
+            <div className="gauge-arrow" style={{ left: `${snapData.avgScore}%`, transition: 'left 0.5s ease' }}>▼</div>
             <div className="gauge-bar">
-              <div className="gauge-safe" style={{ width: '34%' }}></div>
-              <div className="gauge-caution" style={{ width: '50%' }}></div>
-              <div className="gauge-risk" style={{ width: '16%' }}></div>
+              <div className="gauge-safe" style={{ width: `${snapData.safePer}%`, transition: 'width 0.5s ease' }}></div>
+              <div className="gauge-caution" style={{ width: `${snapData.cautionPer}%`, transition: 'width 0.5s ease' }}></div>
+              <div className="gauge-risk" style={{ width: `${snapData.riskPer}%`, transition: 'width 0.5s ease' }}></div>
             </div>
           </div>
 
@@ -84,40 +155,41 @@ const DailySnapshot = () => {
           <div className="ticket-stats-grid">
             <div className="stat-col">
               <span className="stat-label">총 대화 수</span>
-              <span className="stat-value">68<span className="stat-unit">회</span></span>
+              <span className="stat-value">{snapData.totalLogs}<span className="stat-unit">회</span></span>
             </div>
             <div className="stat-col">
               <span className="stat-label">위험 발화</span>
-              <span className="stat-value text-red">12<span className="stat-unit">회</span></span>
+              <span className="stat-value">{snapData.dangerLogs}<span className="stat-unit">회</span></span>
             </div>
             
             <div className="stat-col">
               <span className="stat-label">가장 위험한 시간</span>
-              <span className="stat-value">15~16<span className="stat-unit">시</span></span>
+              <span className="stat-value" style={{ fontSize: '18px' }}>{snapData.worstHour}<span className="stat-unit">시</span></span>
             </div>
             <div className="stat-col">
               <span className="stat-label">많이 나온 감정</span>
-              <span className="stat-value text-yellow">예민함</span>
+              <span className="stat-value text-yellow" style={{ fontSize: '18px' }}>{snapData.topEmotion}</span>
             </div>
             
             <div className="stat-col">
               <span className="stat-label">스피치 재머</span>
-              <span className="stat-value">3<span className="stat-unit">회</span></span>
+              <span className="stat-value">{snapData.jammerLogs}<span className="stat-unit">회</span></span>
             </div>
             <div className="stat-col">
-              <span className="stat-label">연속 안전 대화</span>
-              <span className="stat-value">2<span className="stat-unit">일</span></span>
+              <span className="stat-label">오늘의 한마디</span>
+              <span className="stat-value" style={{ fontSize: '18px' }}>
+                {aiComment}
+              </span>
             </div>
           </div>
 
           <div className="ticket-footer">
             <span className="footer-logo">TiNT Daily Report</span>
-            <span className="footer-date">2026.05.31</span>
+            <span className="footer-date">{snapData.formattedDate}</span>
           </div>
         </div>
       </div>
 
-      {/* 💡 클릭 시 공유/저장 함수 실행 */}
       <button className="share-btn" onClick={handleShare}>오늘 하루 공유하기</button>
     </main>
   );

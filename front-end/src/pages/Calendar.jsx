@@ -1,25 +1,67 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import '../styles/Calendar.css';
 
-// 💡 텍스트 화살표 대신 에셋 이미지 불러오기
+import { collection, query, onSnapshot } from 'firebase/firestore';
+import { db } from '../firebaseConfig';
+
 import backIcon from '../assets/Back.png';
 import forwardIcon from '../assets/Forward.png';
 
-const Calendar = ({ onNavigate }) => {
+const Calendar = ({ onNavigate, returnPage = 'home', initialDateData }) => {
   const today = new Date();
   const actualYear = today.getFullYear();
   const actualMonth = today.getMonth() + 1;
   const actualDate = today.getDate();
-  const todayStr = `${actualYear}-${actualMonth}-${actualDate}`;
+  const selectedYear = initialDateData ? initialDateData.year : actualYear;
+  const selectedMonth = initialDateData ? initialDateData.month : actualMonth;
+  const selectedDay = initialDateData ? initialDateData.day : actualDate;
+  const selectedDateStr = `${selectedYear}-${selectedMonth}-${selectedDay}`;
+  const [currentYear, setCurrentYear] = useState(selectedYear);
+  const [calendarLogs, setCalendarLogs] = useState({});
 
-  const [currentYear, setCurrentYear] = useState(actualYear);
+  useEffect(() => {
+    const q = query(collection(db, 'tint_results'));
 
-  const mockData = {
-    "2026-5-1": "safe", "2026-5-5": "caution", "2026-5-7": "risk",
-    "2026-5-12": "safe", "2026-5-15": "caution", "2026-5-18": "safe",
-    "2026-5-22": "risk", "2026-5-28": "safe", "2026-5-31": "caution",
-    "2026-6-2": "safe", "2026-6-5": "safe", "2026-6-10": "risk"
-  };
+    const unsubscribe = onSnapshot(q, (snapshot) => {
+      const groupedData = {};
+
+      snapshot.docs.forEach(doc => {
+        const data = doc.data();
+        if (!data.timestamp) return;
+
+        const dateObj = new Date(data.timestamp.split(' ')[0]);
+        const year = dateObj.getFullYear();
+        const month = dateObj.getMonth() + 1; 
+        const day = dateObj.getDate();
+        const dateKey = `${year}-${month}-${day}`;
+
+        let levelScore = 1;
+        const levelStr = String(data.tint_danger_level || data.danger_level || data.tint_level || data.level || '').toLowerCase();
+        
+        if (levelStr.includes('2') || levelStr.includes('주의') || levelStr.includes('caution') || levelStr.includes('medium')) {
+          levelScore = 2;
+        } else if (levelStr.includes('3') || levelStr.includes('위험') || levelStr.includes('risk') || levelStr.includes('high') || levelStr.includes('danger')) {
+          levelScore = 3;
+        }
+
+        if (!groupedData[dateKey] || levelScore > groupedData[dateKey].score) {
+          groupedData[dateKey] = {
+            score: levelScore,
+            status: levelScore === 3 ? 'risk' : (levelScore === 2 ? 'caution' : 'safe')
+          };
+        }
+      });
+
+      const finalCalendarData = {};
+      Object.keys(groupedData).forEach(key => {
+        finalCalendarData[key] = groupedData[key].status;
+      });
+
+      setCalendarLogs(finalCalendarData);
+    });
+
+    return () => unsubscribe();
+  }, []);
 
   const calendarData = useMemo(() => {
     const months = [];
@@ -45,44 +87,32 @@ const Calendar = ({ onNavigate }) => {
   };
 
   const handleGoToToday = () => {
-    setCurrentYear(actualYear);
-    scrollToMonth(actualMonth);
+    onNavigate(returnPage, { year: actualYear, month: actualMonth, day: actualDate });
   };
 
   useEffect(() => {
-    scrollToMonth(actualMonth);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    scrollToMonth(selectedMonth);
   }, []);
 
   const handlePrevYear = () => setCurrentYear(prev => prev - 1);
   const handleNextYear = () => setCurrentYear(prev => prev + 1);
 
-  // 💡 날짜 클릭 시 실행되는 함수 (DB 없이 임시 구현)
   const handleDateClick = (year, month, day) => {
-    const clickedDate = `${year}년 ${month}월 ${day}일`;
-    // 1. 눌렀다는 피드백을 알림으로 줌
-    alert(`${clickedDate} 리포트로 이동합니다.\n(현재는 임시 화면인 홈으로 연결됩니다.)`);
-    // 2. 실제 홈 화면으로 보내버림
-    onNavigate('home');
+    onNavigate(returnPage, { year, month, day });
   };
 
   return (
     <div className="page-wrapper bg-white">
       <header className="tint-calendar-header">
-        {/* 💡 텍스트 대신 Back.png 사용 */}
-        <button className="back-arrow-btn" onClick={() => onNavigate('home')}>
+        <button className="back-arrow-btn" onClick={() => onNavigate(returnPage)}>
           <img src={backIcon} alt="뒤로가기" className="nav-icon-img" />
         </button>
         
         <div className="year-nav-container">
-          {/* 💡 이전 연도 버튼 (Back.png) */}
           <button className="year-nav-btn" onClick={handlePrevYear}>
             <img src={backIcon} alt="이전 년도" className="nav-icon-img-small" />
           </button>
-          
           <h1 className="header-title">{currentYear}년</h1>
-          
-          {/* 💡 다음 연도 버튼 (Forward.png) */}
           <button className="year-nav-btn" onClick={handleNextYear}>
             <img src={forwardIcon} alt="다음 년도" className="nav-icon-img-small" />
           </button>
@@ -99,7 +129,6 @@ const Calendar = ({ onNavigate }) => {
         {calendarData.map(({ month, firstDay, daysInMonth }) => (
           <div key={month} id={`month-${month}`} className="month-section">
             <h2 className="month-title">{month}월</h2>
-            
             <div className="days-grid">
               {Array.from({ length: firstDay }).map((_, i) => (
                 <div key={`empty-${i}`} className="day-cell empty"></div>
@@ -107,21 +136,15 @@ const Calendar = ({ onNavigate }) => {
               
               {Array.from({ length: daysInMonth }).map((_, i) => {
                 const day = i + 1;
-                const dateKey = `${currentYear}-${month}-${day}`;
-                const status = mockData[dateKey]; 
-                const isToday = dateKey === todayStr;
-
+                const dateKey = `${currentYear}-${month}-${day}`; 
+                const status = calendarLogs[dateKey]; 
+                const isSelected = dateKey === selectedDateStr;
                 const dayOfWeek = (firstDay + i) % 7;
                 const isWeekend = dayOfWeek === 0 || dayOfWeek === 6;
 
                 return (
-                  <div 
-                    key={day} 
-                    className="day-cell" 
-                    onClick={() => handleDateClick(currentYear, month, day)} // 💡 클릭 이벤트 추가
-                  >
-                    {/* 💡 동그라미로 변경될 영역 */}
-                    <div className={`day-number ${isToday ? 'today' : ''} ${isWeekend && !isToday ? 'weekend' : ''}`}>
+                  <div key={day} className="day-cell" onClick={() => handleDateClick(currentYear, month, day)}>
+                    <div className={`day-number ${isSelected ? 'today' : ''} ${isWeekend && !isSelected ? 'weekend' : ''}`}>
                       {day}
                     </div>
                     {status && <div className={`status-dot-small ${status}`}></div>}
