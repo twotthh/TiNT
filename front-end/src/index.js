@@ -8,3 +8,11 @@ root.render(
     <App />
   </React.StrictMode>
 );
+
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/service-worker.js').catch((error) => {
+      console.error('서비스워커 등록 실패:', error);
+    });
+  });
+}

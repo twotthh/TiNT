@@ -3,23 +3,39 @@ import '../styles/Home.css';
 import DailyDetail from './DailyDetail'; 
 import DailySnapshot from './DailySnapshot'; 
 
-import { collection, query, onSnapshot } from 'firebase/firestore';
+import { collection, query, onSnapshot, orderBy, limit } from 'firebase/firestore';
 import { db } from '../firebaseConfig'; 
 
 import tintLogo from '../assets/TiNT.png';
-import calendarIcon from '../assets/Calendar.png';
-import notificationIcon from '../assets/Notification.png';
-import homeSirenIcon from '../assets/Siren.png';
-import homeChartIcon from '../assets/Increase.png';
-import homeClockIcon from '../assets/Clock.png';
-import homeGoalIcon from '../assets/Goal.png';
-import homeRecommendIcon from '../assets/Comment.png'; 
-import goalFlagIcon from '../assets/Finish.png';
-import homeOn from '../assets/Home_on.png';
-import chartOff from '../assets/Chart_off.png';
-import logOff from '../assets/Log_off.png';
-import myOff from '../assets/My_off.png';
+import calendarIcon from '../assets/Home_Calendar.png';
+import notificationIcon from '../assets/Home_Notification.png';
+import homeSirenIcon from '../assets/Home_Danger.png';
+import homeChartIcon from '../assets/Report_Average.png';
+import homeClockIcon from '../assets/Home_Average.png';
+import homeGoalIcon from '../assets/Home_Goal.png';
+import homeRecommendIcon from '../assets/Home_Recommend.png'; 
+import recLeafIcon from '../assets/Home_Leaf.png';
+import recCafeIcon from '../assets/Home_Cafe.png';
+import recYogaIcon from '../assets/Home_Yoga.png';
+import recViewIcon from '../assets/Home_View.png';
+import homeOn from '../assets/Home_On.png';
+import chartOff from '../assets/Chart_Off.png';
+import logOff from '../assets/Log_Off.png';
+import myOff from '../assets/My_Off.png';
 import backIcon from '../assets/Back.png'; 
+
+function getDaysPassed(startDateStr) {
+  if (!startDateStr) return 0;
+  
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  
+  const start = new Date(startDateStr);
+  start.setHours(0, 0, 0, 0);
+
+  const diffTime = Math.abs(today - start);
+  return Math.floor(diffTime / (1000 * 60 * 60 * 24)); 
+}
 
 const Home = ({ onNavigate, initialDateData }) => {
   const [activeTab, setActiveTab] = useState('하루');
@@ -57,11 +73,33 @@ const Home = ({ onNavigate, initialDateData }) => {
   const [avgDangerScore, setAvgDangerScore] = useState(0);
   const [hasDataToday, setHasDataToday] = useState(false); 
   const [graphPoints, setGraphPoints] = useState([]);
+  
+  const [latestGoal, setLatestGoal] = useState(null);
+  const [currentStreak, setCurrentStreak] = useState(0); 
 
   const [dash, setDash] = useState({
     safetyLen: 0, cautionLen: 0, riskLen: 0,
     safetyOff: 0, cautionOff: 0, riskOff: 0
   });
+
+  useEffect(() => {
+    const q = query(collection(db, 'user_goals'), orderBy('createdAt', 'desc'), limit(1));
+    const unsubscribe = onSnapshot(q, (snapshot) => {
+      if (!snapshot.empty) {
+        const goalData = snapshot.docs[0].data();
+        setLatestGoal({ id: snapshot.docs[0].id, ...goalData });
+        
+        let streak = getDaysPassed(goalData.startDate);
+        if(isNaN(streak)) streak = 0;
+        setCurrentStreak(streak);
+        
+      } else {
+        setLatestGoal(null);
+        setCurrentStreak(0);
+      }
+    });
+    return () => unsubscribe();
+  }, []);
 
   useEffect(() => {
     const q = query(collection(db, 'tint_results'));
@@ -155,10 +193,10 @@ const Home = ({ onNavigate, initialDateData }) => {
   }, [safetyPercent, cautionPercent, riskPercent, activeTab]);
 
   const recommendations = [
-    { icon: "🌿", text1: "잠시 숨을 고르고 몸을 천천히 이완해보세요.", text2: "깊은 호흡이 긴장을 안정시키는 데 도움이 돼요." },
-    { icon: "☕", text1: "따뜻한 물이나 차를 한 잔 마셔보세요.", text2: "몸을 따뜻하게 하면 마음도 한결 편안해집니다." },
-    { icon: "🧘‍♀️", text1: "가벼운 기지개로 굳은 근육을 풀어주세요.", text2: "어깨를 가볍게 돌려주는 것만으로도 아주 좋아요." },
-    { icon: "🌤️", text1: "창문을 열고 신선한 공기를 마셔보세요.", text2: "가벼운 환기는 기분 전환과 안정에 효과적입니다." }
+    { icon: recLeafIcon, text1: "잠시 숨을 고르고 몸을 천천히 이완해보세요.", text2: "깊은 호흡이 긴장을 안정시키는 데 도움이 돼요." },
+    { icon: recCafeIcon, text1: "따뜻한 물이나 차를 한 잔 마셔보세요.", text2: "몸을 따뜻하게 하면 마음도 한결 편안해집니다." },
+    { icon: recYogaIcon, text1: "가벼운 기지개로 굳은 근육을 풀어주세요.", text2: "어깨를 가볍게 돌려주는 것만으로도 아주 좋아요." },
+    { icon: recViewIcon, text1: "창문을 열고 신선한 공기를 마셔보세요.", text2: "가벼운 환기는 기분 전환과 안정에 효과적입니다." }
   ];
   const [recIndex, setRecIndex] = useState(0);
   const handleNextRecommend = () => setRecIndex((prev) => (prev + 1) % recommendations.length);
@@ -245,7 +283,7 @@ const Home = ({ onNavigate, initialDateData }) => {
               <img src={tintLogo} alt="TiNT Logo" className="logo" />
               <div className="header-icons">
                 <img src={calendarIcon} alt="Calendar" className="top-icon" onClick={() => onNavigate('calendar')} style={{ cursor: 'pointer' }} />
-                <img src={notificationIcon} alt="Notification" className="top-icon" />
+                <img src={notificationIcon} alt="Notification" className="top-icon" onClick={() => onNavigate('notification')} style={{ cursor: 'pointer' }} />
               </div>
             </header>
 
@@ -370,7 +408,7 @@ const Home = ({ onNavigate, initialDateData }) => {
                         })()}
                         
                         <svg viewBox="0 0 300 70" className="line-graph-svg" preserveAspectRatio="none" style={{ width: '100%', height: '100%', overflow: 'visible' }}>
-                          <path d={pathD} fill="none" stroke="#A5D6A7" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round" />
+                          <path d={pathD} fill="none" stroke="#d6d6d6" strokeWidth="3.0" strokeLinecap="round" strokeLinejoin="round" />
 
                           {(() => {
                             let maxPoint = graphPoints.reduce((max, p) => (p.score > max.score ? p : max), graphPoints[0]);
@@ -403,17 +441,32 @@ const Home = ({ onNavigate, initialDateData }) => {
                 </div>
               </div>
 
-              <div className="card full-card bouncy-card goal-card">
-                <div className="card-header no-margin">
+              <div 
+                className="card full-card bouncy-card" 
+                onClick={() => onNavigate('goalList')}
+                style={{ cursor: 'pointer' }}
+              >
+                <div className="card-header no-margin" style={{ display: 'flex', alignItems: 'center' }}>
                   <img src={homeGoalIcon} alt="goal" className="card-icon" />
-                  <span className="card-title">일주일동안 위험 알림 10번 이하</span>
+                  <span className="card-title" style={{ flex: 1, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                    {latestGoal ? latestGoal.title : "새로운 목표를 설정해보세요!"}
+                  </span>
                 </div>
-                <div className="progress-container">
+                <div className="progress-container" style={{ marginTop: '12px' }}>
                   <div className="progress-bar-bg">
-                    <div className="progress-bar-fill" style={{ width: '70%' }}></div>
+                    <div 
+                      className="progress-bar-fill" 
+                      style={{ width: latestGoal ? `${Math.min(100, ((currentStreak + 1) / latestGoal.days) * 100)}%` : '0%', transition: 'width 0.5s ease' }}
+                    ></div>
                   </div>
-                  <img src={goalFlagIcon} alt="flag" className="flag-icon" />
                 </div>
+                {latestGoal && (
+                  <div style={{ fontSize: '13px', color: '#666', marginTop: '10px', textAlign: 'right', fontWeight: '600' }}>
+                    {currentStreak >= latestGoal.days 
+                      ? '목표 달성 완료!' 
+                      : `${currentStreak + 1}일째 진행 중 · 목표 ${latestGoal.days}일`}
+                  </div>
+                )}
               </div>
 
               <div className="card full-card bouncy-card clickable-card" onClick={handleNextRecommend}>
@@ -425,7 +478,7 @@ const Home = ({ onNavigate, initialDateData }) => {
                   <span className="refresh-hint">다른 추천 보기 ↻</span> 
                 </div>
                 <div className="recommend-box">
-                  <div className="recommend-icon-circle">{recommendations[recIndex].icon}</div>
+                  <div className="recommend-icon-circle" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '6px', flexShrink: 0 }}><img src={recommendations[recIndex].icon} alt="추천" style={{ width: '28px', height: '28px', objectFit: 'contain' }} /></div>
                   <div className="recommend-text">
                     <p>{recommendations[recIndex].text1}</p>
                     <p>{recommendations[recIndex].text2}</p>
@@ -454,7 +507,7 @@ const Home = ({ onNavigate, initialDateData }) => {
           <div className="nav-item active" onClick={() => onNavigate('home')}><img src={homeOn} alt="홈" className="nav-icon" /><span>홈</span></div>
           <div className="nav-item" onClick={() => onNavigate('analysis')}><img src={chartOff} alt="분석" className="nav-icon" /><span>분석</span></div>
           <div className="nav-item" onClick={() => onNavigate('log')}><img src={logOff} alt="로그" className="nav-icon" /><span>로그</span></div>
-          <div className="nav-item"><img src={myOff} alt="마이" className="nav-icon" /><span>마이</span></div>
+          <div className="nav-item" onClick={() => onNavigate('mypage')}><img src={myOff} alt="마이" className="nav-icon" /><span>마이</span></div>
         </nav>
       )}
     </div>

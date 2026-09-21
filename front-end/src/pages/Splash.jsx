@@ -40,8 +40,8 @@ const Splash = ({ onFinish }) => {
         <img src={T} alt="T" className="logo-letter letter-4" />
       </div>
 
-      <div className="cat-container">
-        <img src={hi} alt="Cat" className="cat-image" />
+      <div className="cat-container" style={{ width: '100%', display: 'flex', justifyContent: 'center', overflow: 'hidden' }}>
+        <img src={hi} alt="Cat" className="cat-image" style={{ width: '57%', maxWidth: '360px', height: 'auto', objectFit: 'contain'}} />
       </div>
 
       <div className="loading-container">

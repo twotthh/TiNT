@@ -1,0 +1,161 @@
+.goal-wrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background-color: #FFFFFF;
+}
+
+.goal-header {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 56px;
+  border-bottom: 1px solid #F3F4F6;
+  background-color: #FFFFFF;
+}
+
+.back-btn-left {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  padding: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.back-btn-left img {
+  width: 24px;
+  height: 24px;
+}
+
+.header-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: #111111;
+  margin: 0;
+}
+
+.goal-content {
+  flex: 1;
+  overflow-y: auto;
+  padding-bottom: 20px;
+}
+
+.goal-title-section {
+  padding: 24px 20px 0 20px;
+}
+
+.section-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: #111111;
+  margin: 0 0 8px 0;
+}
+
+.goal-title-input {
+  width: 100%;
+  padding: 14px 16px;
+  border-radius: 12px;
+  border: 1px solid #E5E7EB;
+  font-size: 15px;
+  color: #111111;
+  margin-top: 12px;
+  outline: none;
+  transition: border-color 0.2s;
+  box-sizing: border-box;
+}
+
+.goal-title-input:focus {
+  border-color: #92AA83;
+}
+
+.divider-thick {
+  height: 8px;
+  background-color: #F4F5F7;
+  width: 100%;
+  margin-top: 24px;
+}
+
+.goal-selection-section {
+  padding: 32px 20px;
+}
+
+.section-subtitle {
+  font-size: 14px;
+  color: #888888;
+  margin: 0 0 24px 0;
+}
+
+.goal-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.goal-list-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  border-radius: 12px;
+  border: 1px solid #E5E7EB;
+  background-color: #FFFFFF;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.goal-list-item.active {
+  border: 2px solid #92AA83;
+  background-color: #F4F8F3;
+  padding: 19px;
+}
+
+.goal-item-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: #111111;
+  margin: 0 0 6px 0;
+}
+
+.goal-item-desc {
+  font-size: 13px;
+  color: #666666;
+  margin: 0;
+}
+
+.check-icon {
+  color: #92AA83;
+}
+
+.goal-footer {
+  padding: 16px 20px 32px 20px;
+  background-color: #FFFFFF;
+}
+
+.save-btn {
+  width: 100%;
+  padding: 16px;
+  border: none;
+  border-radius: 12px;
+  background-color: #92AA83;
+  color: #FFFFFF;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.save-btn:active {
+  opacity: 0.8;
+}
+
+.save-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

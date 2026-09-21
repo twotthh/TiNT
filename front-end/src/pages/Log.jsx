@@ -4,10 +4,10 @@ import '../styles/Log.css';
 import { collection, query, orderBy, onSnapshot } from 'firebase/firestore';
 import { db } from '../firebaseConfig'; 
 
-import homeOff from '../assets/Home_off.png';
-import chartOff from '../assets/Chart_off.png';
-import logOn from '../assets/Log_on.png'; 
-import myOff from '../assets/My_off.png';
+import homeOff from '../assets/Home_Off.png';
+import chartOff from '../assets/Chart_Off.png';
+import logOn from '../assets/Log_On.png'; 
+import myOff from '../assets/My_Off.png';
 import forwardIcon from '../assets/Forward.png';
 
 const Log = ({ onNavigate, initialDateData }) => {
@@ -155,7 +155,7 @@ const Log = ({ onNavigate, initialDateData }) => {
         <div className="nav-item" onClick={() => onNavigate('home')}><img src={homeOff} alt="홈" className="nav-icon" /><span>홈</span></div>
         <div className="nav-item" onClick={() => onNavigate('analysis')}><img src={chartOff} alt="분석" className="nav-icon" /><span>분석</span></div>
         <div className="nav-item active" onClick={() => onNavigate('log')}><img src={logOn} alt="로그" className="nav-icon" /><span>로그</span></div>
-        <div className="nav-item"><img src={myOff} alt="마이" className="nav-icon" /><span>마이</span></div>
+        <div className="nav-item" onClick={() => onNavigate('mypage')}><img src={myOff} alt="마이" className="nav-icon" /><span>마이</span></div>
       </nav>
     </div>
   );

@@ -1,0 +1,63 @@
+.live-alert-banner {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 999;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 20px;
+    padding-top: max(14px, env(safe-area-inset-top));
+    border-bottom: 1px solid;
+    animation: liveAlertSlideDown 0.3s ease-out;
+}
+
+@keyframes liveAlertSlideDown {
+    from { transform: translateY(-100%); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+.live-alert-banner.is-warning {
+    background-color: #FFF8E1;
+    border-color: #FFE082;
+}
+
+.live-alert-banner.is-jammer {
+    background-color: #FFEBEE;
+    border-color: #FFCDD2;
+}
+
+.live-alert-icon {
+    width: 28px;
+    height: 28px;
+    object-fit: contain;
+    flex-shrink: 0;
+}
+
+.is-jammer .live-alert-icon {
+    filter: drop-shadow(0 2px 4px rgba(255, 76, 76, 0.3));
+}
+
+.live-alert-text {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.live-alert-title {
+    font-size: 14px;
+    font-weight: 800;
+}
+
+.is-warning .live-alert-title { color: #B28704; }
+.is-jammer .live-alert-title { color: #C62828; }
+
+.live-alert-sub {
+    font-size: 12px;
+    font-weight: 600;
+    opacity: 0.85;
+}
+
+.is-warning .live-alert-sub { color: #B28704; }
+.is-jammer .live-alert-sub { color: #D32F2F; }

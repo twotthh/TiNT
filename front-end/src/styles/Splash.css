@@ -44,9 +44,9 @@
   position: absolute;
   bottom: 10%; 
   right: -40%; 
-  width: 380px;
+  width: 370px;
   z-index: 5;
-  transform: rotate(-45deg); 
+  transform: rotate(-47deg); 
 }
 
 .cat-image {

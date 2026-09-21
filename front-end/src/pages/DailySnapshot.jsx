@@ -1,13 +1,13 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useState, useEffect, useMemo } from 'react';
 import html2canvas from 'html2canvas'; 
 import '../styles/DailySnapshot.css';
-import catFace from '../assets/cat_face.png';
+import catFace from '../assets/card_cat.png';
 import { collection, query, onSnapshot } from 'firebase/firestore';
 import { db } from '../firebaseConfig';
 
 const DailySnapshot = ({ currentDate }) => {
   const captureRef = useRef(null);
-  const dateObj = currentDate || new Date();
+  const dateObj = useMemo(() => currentDate || new Date(), [currentDate]);
 
   const [snapData, setSnapData] = useState({
     avgScore: 0,
@@ -97,7 +97,7 @@ const DailySnapshot = ({ currentDate }) => {
     });
 
     return () => unsubscribe();
-  }, [currentDate]);
+  }, [dateObj]);
 
   const handleShare = async () => {
     if (!captureRef.current) return;
@@ -115,12 +115,12 @@ const DailySnapshot = ({ currentDate }) => {
           const a = document.createElement('a');
           a.href = url; a.download = 'tint_daily_report.png';
           document.body.appendChild(a); a.click(); document.body.removeChild(a);
-          URL.revokeObjectURL(url); alert('영수증 이미지가 저장되었습니다!');
+          URL.revokeObjectURL(url); alert('오늘의 TiNT 리포트가 저장되었습니다!');
         }
       }, 'image/png');
     } catch (error) {
       console.error('캡처 에러:', error);
-      alert('이미지 생성에 실패했습니다.');
+      alert('리포트 생성에 실패했습니다.');
     }
   };
 

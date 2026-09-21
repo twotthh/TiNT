@@ -92,7 +92,7 @@ const Calendar = ({ onNavigate, returnPage = 'home', initialDateData }) => {
 
   useEffect(() => {
     scrollToMonth(selectedMonth);
-  }, []);
+  }, [selectedMonth]);
 
   const handlePrevYear = () => setCurrentYear(prev => prev - 1);
   const handleNextYear = () => setCurrentYear(prev => prev + 1);

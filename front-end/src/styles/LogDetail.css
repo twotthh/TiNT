@@ -83,13 +83,10 @@
     border-radius: 10px;
 }
 
-.guide-box {
-    background-color: #fffcdf;
-    border: 1px solid #e0d64c;
-    padding: 15px;
-    border-radius: 12px;
-    color: #000000;
-    font-weight: 500;
+.custom-audio {
+    width: 100%;
+    height: 40px;
+    outline: none;
 }
 
 .no-audio-box {
@@ -118,34 +115,99 @@
     font-weight: 600; 
 }
 
-.emotion-badges {
+.emotion-bar-container {
     display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
+    flex-direction: column;
+    gap: 14px;
+    margin-top: 8px;
 }
 
-.emo-badge {
+.emotion-bar-row {
     display: flex;
     align-items: center;
-    gap: 6px;
-    padding: 8px 14px;
-    border-radius: 20px;
+    gap: 12px;
+}
+
+.emotion-label {
+    width: 45px;
     font-size: 14px;
-    font-weight: 700;
+    font-weight: 800;
+    color: #000000;
 }
 
-.emo-badge strong {
-    font-weight: 900;
-    font-size: 15px;
+.emotion-track {
+    flex: 1;
+    height: 10px;
+    background-color: #F1F5F9;
+    border-radius: 6px;
+    overflow: hidden;
 }
 
-.emo-기쁨 { background: #E8F5E9; color: #95da99; }
-.emo-놀람 { background: #FFF3E0; color: #ebad7b; }
-.emo-분노 { background: #FFEBEE; color: #f19a9a; }
-.emo-혐오 { background: #F3E5F5; color: #d6a5f5; }
-.emo-슬픔 { background: #E3F2FD; color: #99c2f1; }
-.emo-불안 { background: #ECEFF1; color: #778d97; }
-.emo-공감 { background: #FFF8E1; color: #f5c271; }
-.emo-부러움 { background: #FCE4EC; color: #be8fa3; }
-.emo-안정 { background: #E8F5E9; color: #76b379; }
-.emo-default { background: #F1F5F9; color: #97d5c9; }
+.emotion-fill {
+    height: 100%;
+    border-radius: 6px;
+    transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.emotion-value {
+    width: 40px;
+    text-align: right;
+    font-size: 14px;
+    font-weight: 800;
+    color: #000000;
+}
+
+.emo-기쁨 { background-color: #ffc8e8; }
+.emo-놀람 { background-color: #fff588; }
+.emo-분노 { background-color: #ff4545; }
+.emo-혐오 { background-color: #444c7e; }
+.emo-슬픔 { background-color: #60A5FA; }
+.emo-불안 { background-color: #9279a8; }
+.emo-공감 { background-color: #86da71; }
+.emo-부러움 { background-color: #c4a2d1; }
+
+.emo-default { 
+    background-color: #edf1f6; 
+}
+
+.ai-guide-section {
+    border-radius: 20px;
+    padding: 24px;
+    margin-top: 10px;
+    border: none;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.03);
+}
+
+.guide-risk { background-color: #fff5f5; }
+.guide-caution { background-color: #fcfff0; }
+.guide-safe { background-color: #f2fbf3; }
+
+.guide-header-new {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 16px;
+}
+
+.guide-title {
+    font-size: 16px;
+    font-weight: 800;
+    color: #111111;
+    margin: 0;
+}
+
+.guide-content-box {
+    background-color: rgba(255, 255, 255, 0.85);
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 1), 0 2px 8px rgba(0, 0, 0, 0.02);
+}
+
+.guide-text-new {
+    color: #334155; 
+    font-size: 14px;
+    line-height: 1.6;
+    font-weight: 600;
+    margin: 0;
+    word-break: keep-all;
+}

@@ -1,0 +1,10 @@
+SpeechRecognition
+PyAudio
+torch
+transformers
+firebase-admin
+google-generativeai
+python-dotenv
+librosa
+numpy
+soundfile

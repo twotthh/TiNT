@@ -226,8 +226,8 @@
 
 .ai-monthly-card { background: linear-gradient(to bottom, #FFFFFF, #F8FAFC); }
 .monthly-title-area { display: flex; align-items: center; gap: 16px; margin-bottom: 20px; }
-.monthly-cat-bg { width: 60px; height: 60px; background-color: #FFF3C4; border-radius: 50%; display: flex; justify-content: center; align-items: flex-end; overflow: hidden; }
-.monthly-cat-img { width: 80%; height: auto; margin-bottom: -5px; }
+.monthly-cat-bg { width: 60px; height: 60px; background-color: #fefbf0; border-radius: 50%; display: flex; justify-content: center; align-items: flex-end; overflow: hidden; }
+.monthly-cat-img { width: 80%; height: auto; margin-bottom: 10px;}
 .monthly-title-text p { margin: 0 0 4px 0; font-size: 12px; color: #666; font-weight: 700; }
 .monthly-title-text h4 { margin: 0; font-size: 18px; font-weight: 900; color: #111; letter-spacing: -0.5px; }
 

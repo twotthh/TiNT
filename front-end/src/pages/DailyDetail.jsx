@@ -1,22 +1,21 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import '../styles/DailyDetail.css';
 
 import { collection, query, onSnapshot } from 'firebase/firestore';
 import { db } from '../firebaseConfig';
 
 import thinkCat from '../assets/think_cat.png'; 
-import sirenIcon from '../assets/Siren.png';
-import increaseIcon from '../assets/Increase.png';
-import ScoreIcon from '../assets/Chat_score.png';
-import SuggestionIcon from '../assets/Today_suggest.png';
+import sirenIcon from '../assets/Home_Danger.png';
+import increaseIcon from '../assets/Report_Average.png';
+import ScoreIcon from '../assets/Report_Score.png';
+import SuggestionIcon from '../assets/Report_Exclamation.png';
 
 const DailyDetail = ({ currentDate }) => {
-  const dateObj = currentDate || new Date();
+  const dateObj = useMemo(() => currentDate || new Date(), [currentDate]);
   const month = dateObj.getMonth() + 1;
   const date = dateObj.getDate();
   const dayName = ['일', '월', '화', '수', '목', '금', '토'][dateObj.getDay()];
 
-  const [logs, setLogs] = useState([]);
   const [stats, setStats] = useState({
     dangerCount: 0,
     avgScore: 0,
@@ -93,15 +92,14 @@ const DailyDetail = ({ currentDate }) => {
         emotions: emotionsWithPercent,
         topEmotion: emotionsWithPercent.length > 0 ? emotionsWithPercent[0].name : '평온'
       });
-      setLogs(parsedLogs);
     });
 
     return () => unsubscribe();
-  }, [currentDate]);
+  }, [dateObj]);
 
   const bubbleStyles = ['y-bubble', 'r-bubble', 'g-bubble', 'gr-bubble'];
 
-  let suggestion1 = "오늘 밤은 따뜻한 차를 마시며 수면을 취해보세요.";
+  let suggestion1 = "오늘 밤은 좋아하는 것을 하고 몸과 마음이 편한 상태로 수면을 취해보세요.";
   let suggestion2 = `내일은 오늘 평균 위험도(${stats.avgScore}%)보다 조금 더 낮은 점수를 목표로 해볼까요?`;
 
   if (stats.avgScore === 0) {
@@ -111,10 +109,10 @@ const DailyDetail = ({ currentDate }) => {
     suggestion1 = "정말 평온하고 안정적인 하루를 보내셨네요! 훌륭해요~";
     suggestion2 = "지금의 좋은 에너지와 긍정적인 마음을 내일도 유지해 볼까요?";
   } else if (stats.avgScore < 50) {
-    suggestion1 = "무난한 하루였어요! 중간중간 스트레칭으로 긴장을 풀어주세요.";
-    suggestion2 = "내일은 긍정적인 단어를 조금 더 많이 사용해 보는 건 어떨까요?";
+    suggestion1 = "무난한 하루였어요! 중간중간 스트레칭으로 긴장을 풀어주면 좋아요.";
+    suggestion2 = "내일은 나를 위해 긍정적인 단어를 조금 더 사용해 보는 건 어떨까요?";
   } else {
-    suggestion1 = "오늘은 스트레스가 조금 쌓인 것 같아요. 따뜻한 차 한 잔 어때요? 🍵";
+    suggestion1 = "오늘은 스트레스가 조금 쌓인 것 같아요. 따뜻한 차 한 잔 어때요?";
     suggestion2 = "내일은 스피치 재머가 켜지지 않도록, 화가 날 때 심호흡을 먼저 해봐요!";
   }
 
